@@ -1,10 +1,10 @@
 use std::fmt::{Debug, Display, Formatter, Result as FmtResult};
 
-use pyo3::{pyclass, pymethods};
 use akatsuki_pp::{
     catch::CatchDifficultyAttributes, mania::ManiaDifficultyAttributes,
     osu::OsuDifficultyAttributes, taiko::TaikoDifficultyAttributes, DifficultyAttributes,
 };
+use pyo3::{pyclass, pymethods};
 
 #[pyclass(name = "DifficultyAttributes")]
 #[derive(Clone, Debug)]
@@ -91,6 +91,8 @@ impl Debug for BorrowedDifficultyAttributes<'_> {
                     n_spinners,
                     stars,
                     max_combo,
+                    aim_difficult_strain_count,
+                    speed_difficult_strain_count,
                 } = attrs;
 
                 debug.field("mode", &0_u8);
@@ -109,6 +111,8 @@ impl Debug for BorrowedDifficultyAttributes<'_> {
                     n_spinners,
                     stars,
                     max_combo,
+                    aim_difficult_strain_count,
+                    speed_difficult_strain_count,
                 }
             }
             Self::Taiko(attrs) => {

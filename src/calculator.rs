@@ -1,8 +1,4 @@
-use akatsuki_pp::{
-    osu::{OsuDifficultyAttributes, OsuPerformanceAttributes},
-    osu_2019::OsuPP,
-    AnyPP, AnyStars, DifficultyAttributes, GameMode, Mods, PerformanceAttributes,
-};
+use akatsuki_pp::{AnyPP, AnyStars, DifficultyAttributes, GameMode};
 use pyo3::{
     exceptions::{PyTypeError, PyValueError},
     pyclass, pymethods,
@@ -231,67 +227,7 @@ impl PyCalculator {
         Ok(calc.calculate().into())
     }
 
-    fn performance_2019(&self, map: &PyBeatmap) -> PyResult<PyPerformanceAttributes> {
-        let mut calc = OsuPP::new(&map.inner);
-
-        set_calc! { calc, self:
-            mods,
-            combo,
-            n300,
-            n100,
-            n50,
-            passed_objects,
-        };
-
-        if let Some(n_misses) = self.n_misses {
-            calc = calc.misses(n_misses);
-        }
-
-        if let Some(acc) = self.acc {
-            calc = calc.accuracy(acc as f32);
-        }
-
-        let attrs = calc.calculate();
-
-        let new_attrs = OsuPerformanceAttributes {
-            difficulty: OsuDifficultyAttributes {
-                aim: attrs.difficulty.aim_strain,
-                speed: attrs.difficulty.speed_strain,
-                flashlight: 0.0,
-                slider_factor: 0.0,
-                speed_note_count: 0.0,
-                ar: attrs.difficulty.ar,
-                od: attrs.difficulty.od,
-                hp: attrs.difficulty.hp,
-                n_circles: attrs.difficulty.n_circles,
-                n_sliders: attrs.difficulty.n_sliders,
-                n_spinners: attrs.difficulty.n_spinners,
-                stars: attrs.difficulty.stars,
-                max_combo: attrs.difficulty.max_combo,
-            },
-            pp: attrs.pp,
-            pp_acc: attrs.pp_acc,
-            pp_aim: attrs.pp_aim,
-            pp_flashlight: attrs.pp_flashlight,
-            pp_speed: attrs.pp_speed,
-            effective_miss_count: attrs.effective_miss_count,
-        };
-
-        Ok(PerformanceAttributes::Osu(new_attrs).into())
-    }
-
     fn performance(&self, map: &PyBeatmap) -> PyResult<PyPerformanceAttributes> {
-        // criteria:
-        // - is relax
-        // - is osu!standard
-        //   or mode is not specified and map is osu!standard, as that will be the inferred mode
-        if (self.mods.is_some() && self.mods.unwrap().rx())
-            && ((self.mode.is_none() && map.inner.mode == GameMode::Osu)
-                || self.mode == Some(GameMode::Osu))
-        {
-            return self.performance_2019(map);
-        }
-
         let mut calc = AnyPP::new(&map.inner);
 
         set_calc! { calc, self:
