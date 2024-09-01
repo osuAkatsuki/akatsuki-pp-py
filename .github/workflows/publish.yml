@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Python setup
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5.1.1
         with:
           python-version: ${{ matrix.python_version }}
           architecture: x64
@@ -63,7 +63,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Python setup
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5.1.1
         with:
           python-version: ${{ matrix.python_version }}
           architecture: ${{ matrix.target }}
@@ -99,7 +99,7 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Python setup
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5.1.1
       with:
         python-version: ${{ matrix.python_version }}
         architecture: x64
@@ -137,7 +137,7 @@ jobs:
           name: wheels
 
       - name: Python setup
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5.1.1
         with:
           python-version: ${{ matrix.python_version }}
 
