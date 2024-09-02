@@ -1,3 +1,4 @@
+#![allow(unexpected_cfgs)]
 #![deny(clippy::all, nonstandard_style, rust_2018_idioms, unused, warnings)]
 
 use self::{
