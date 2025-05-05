@@ -1,10 +1,10 @@
 [build-system]
-requires = ["maturin>=0.14,<0.15"]
+requires = ["maturin>=1,<2"]
 build-backend = "maturin"
 
 [project]
 name = "akatsuki-pp-py"
-version = "1.0.5"
+version = "1.1.0"
 requires-python = ">=3.7"
 description = "osu! difficulty and pp calculation for all modes"
 classifiers = [
@@ -16,12 +16,13 @@ classifiers = [
     "Programming Language :: Python :: Implementation :: CPython",
     "Programming Language :: Python :: Implementation :: PyPy",
 ]
-packages = [{ include = "akatsuki_pp_py" }]
 authors = [
     { name = "Max Ohn", email = "ohn.m@hotmail.de" },
     { name = "tsunyoku", email = "tsunyoku@gmail.com" },
 ]
 readme = "README.md"
 license = { file = "LICENSE" }
-repository = "https://github.com/osuAkatsuki/akatsuki-pp-py"
 keywords = ["osu", "pp", "stars", "performance", "difficulty"]
+
+[tool.maturin]
+features = ["pyo3/extension-module", "pyo3/generate-import-lib"]

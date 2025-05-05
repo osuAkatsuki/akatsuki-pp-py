@@ -1,20 +1,25 @@
 [package]
 name = "akatsuki-pp-py"
-version = "1.0.5"
+version = "1.1.0"
 description = "osu! difficulty and pp calculation for all modes"
 authors = ["Max Ohn <ohn.m@hotmail.de>", "tsunyoku <tsunyoku@gmail.com>"]
 license = "MIT"
 edition = "2021"
+readme = "README.md"
+repository = "https://github.com/osuAkatsuki/rosu-pp-py"
 
 [lib]
 name = "akatsuki_pp_py"
 crate-type = ["cdylib"]
 
 [dependencies]
-pyo3 = { version = "0.17", features = ["extension-module", "macros"] }
-akatsuki-pp = { git = "https://github.com/osuAkatsuki/akatsuki-pp-rs", rev = "b96019f50aa7d09bcbde60016481a69df04315e4" }
+pyo3 = { version = "0.24", features = ["extension-module", "macros"] }
+rosu-mods = { version = "0.3.0", default-features = false, features = ["serde"] }
+akatsuki-pp = { git = "https://github.com/osuAkatsuki/akatsuki-pp-rs", rev = "5cade315ad28a47f68922bc29d02a4b16926b9b6", features = ["sync"] }
+serde = { version = "1.0.203" }
 
 [profile.release]
-lto = "fat"
+lto = true
+panic = "abort"
 codegen-units = 1
-strip = "debuginfo"
+strip = true
